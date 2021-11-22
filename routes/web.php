@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index'])->name('site.index');
 
+Route::any('search', [SiteController::class, 'search'])->name('site.search');
+
+Route::any('/authors', [SiteController::class, 'authors'])->name('site.authors');
+
 Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'           => 'امیرعلی باقری',
                 'email'          => 'bagheriamirali2000@gmail.com',
+                'avatar'          => '/images/team'.random_int(1,4).'.jpeg',
                 'password'       => bcrypt('1234567890')
             ]
         );
@@ -30,6 +31,11 @@ class DatabaseSeeder extends Seeder
         // User registrasi
         $users = User::factory()->times(10)->create();
         $users->push($defaultUser);
+
+        // Author Users
+        User::query()->whereIn('id',[1,5,7])->update([
+            'isAuthor'=>1
+        ]);
 
         // Admin membuat master kategori
         $categories = [];
@@ -45,27 +51,36 @@ class DatabaseSeeder extends Seeder
             'title'=>'دسته سوم',
             'slug'=>'دسته-سوم',
         ]);
+        $categories[] = Category::create([
+            'title'=>'دسته چهارم',
+            'slug'=>'دسته-چهارم',
+        ]);
+       $categories[] = Category::create([
+            'title'=>'دسته پنجم',
+            'slug'=>'دسته-پنجم',
+        ]);
+       $categories[] = Category::create([
+            'title'=>'دسته ششم',
+            'slug'=>'دسته-ششم',
+        ]);
 
         $categories = collect($categories);
 
         $courses = [];
 
         // Untuk setiap user, punya 0 - 3 course
-        foreach ($users as $user) {
+        foreach (User::where('isAuthor',1)->get() as $user) {
 
             $userCourses = Course::factory()
                 ->times(rand(1, 3))
                 ->make();
 
-            // asosiasikan course dengan category dan author
-            // setiap course punya beberapa video
             foreach($userCourses as $course) {
                 $course->author()->associate($user);
                 $course->category()->associate($categories->random()->getKey());
                 $course->save();
             }
 
-            // setiap course punya beberapa video
             foreach($userCourses as $course) {
                 foreach (range(1, 5) as $index) {
                     $video = Video::factory()->make(['sort' => $index]);
@@ -81,9 +96,5 @@ class DatabaseSeeder extends Seeder
         {
             $user->wishlists()->sync([$courses->random()->getKey(), $courses->random()->getKey()]);
         }
-
-        // Enrolled Course
-
-        // Models\User::factory(10)->create();
     }
 }

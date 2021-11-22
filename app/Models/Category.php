@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Traits\SlugifyTrait;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
     use HasFactory;
-    use SlugifyTrait;
+    use Sluggable;
 
     protected $guarded = [];
 
@@ -18,9 +18,12 @@ class Category extends Model
         return $this->hasMany(Course::class);
     }
 
-    public function setNameAttribute($value)
+    public function sluggable(): array
     {
-        $this->attributes['name'] = $value;
-        $this->attributes['slug'] = $this->slugify($value);
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

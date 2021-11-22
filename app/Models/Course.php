@@ -4,18 +4,26 @@ namespace App\Models;
 
 use App\Traits\CoursePresenter;
 use App\Traits\SlugifyTrait;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
     use HasFactory;
-    use CoursePresenter, SlugifyTrait;
+    use CoursePresenter;
+    use Sluggable;
 
     protected $guarded = [];
 
-
-    protected $fillable = ['title', 'description', 'price', 'category_id', 'author_id'];
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
 
     public function category()
     {
@@ -35,11 +43,5 @@ class Course extends Model
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class);
-    }
-
-    public function setTitleAttribute($value)
-    {
-        $this->attributes['title'] = $value;
-        $this->attributes['slug'] = $this->slugify($value);
     }
 }

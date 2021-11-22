@@ -12,6 +12,7 @@ class CreateCategoriesTable extends Migration
 			$table->id();
             $table->string('title', 80);
             $table->string('slug', 100)->unique();
+            $table->unsignedSmallInteger('status')->default(1);
 			$table->timestamps();
 		});
 	}

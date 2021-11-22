@@ -4,59 +4,10 @@
 
 @section('content')
     <section class="dashboard-area rtl">
-        <div class="dashboard_menu_area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button class="menu-toggler d-md-none">
-                            <span class="icon-menu"></span> منوهای داشبورد
-                        </button>
-                        <ul class="dashboard_menu">
-                            <li>
-                                <a href="dashboard.htm">
-                                    <span class="lnr icon-home"></span>داشبورد</a>
-                            </li>
-                            <li class="active">
-                                <a href="dashboard-setting.htm">
-                                    <span class="lnr icon-settings"></span>تنظیمات</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-purchase.htm">
-                                    <span class="lnr icon-basket"></span>خرید ها</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-add-credit.htm">
-                                    <span class="lnr icon-credit-card"></span>افزودن اعتبار</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-statement.htm">
-                                    <span class="lnr icon-chart"></span>نمودار</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-upload.htm">
-                                    <span class="lnr icon-cloud-upload"></span>آپلود محصول</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-manage-item.htm">
-                                    <span class="lnr icon-note"></span>مدیریت محصول</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-withdrawal.htm">
-                                    <span class="lnr icon-briefcase"></span>دریافت وجه</a>
-                            </li>
-                        </ul>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
         <div class="dashboard_contents section--padding">
             <div class="container">
-                <form action="dashboard-setting.htm#" class="setting_form">
+                <form method="post" action="{{route('profile.update')}}" class="setting_form">
+                    @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <div class="information_module">

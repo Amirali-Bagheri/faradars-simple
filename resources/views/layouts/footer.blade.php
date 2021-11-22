@@ -130,14 +130,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright-text">
-                        <p>&copy; 2018
-                            <a href="index.htm#">DigiPro</a> راست چین وبومی شده توسط
-                            <a href="https://www.instagram.com/_zeroweb_/">آقای طراح </a>
+                        <p>
+                            کلیه حقوق محفوظ است
                         </p>
                     </div>
-                    <div class="go_top">
-                        <span class="icon-arrow-up"></span>
-                    </div>
+{{--                    <div class="go_top">--}}
+{{--                        <span class="icon-arrow-up"></span>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>

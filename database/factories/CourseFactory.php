@@ -15,7 +15,7 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'category_id'   => random_int(1, 3),
+            'category_id'   => random_int(1, 6),
             'author_id'     => random_int(1, 3),
             'title'         => 'لورم ایپسوم ' . $this->faker->title,
             'description'   => $this->faker->paragraph(5),

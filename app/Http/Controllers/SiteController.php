@@ -2,17 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Course;
-use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
-	public function index()
-	{
+    public function index(Request $request)
+    {
+        $cat_query = $request->query('cat');
+        $category  = Category::firstWhere('slug', $cat_query);
 
-        $courses = Course::latest()->paginate(15);
+        if ( ! empty($category)) {
+            $courses = $category->courses()->paginate(15);
+        } else {
+            $courses = Course::latest()->paginate(15);
+        }
 
+        $categories = Category::where('status', 1)->whereHas('courses')->withCount('courses')->orderBy('courses_count')
+                              ->paginate(15);
 
-		return view('index',compact('courses'));
-	}
+        return view('index', compact('courses', 'categories'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->query('q');
+
+        $courses = Course::query()
+                         ->where('title', 'LIKE', '%' . $query . '%')
+                         ->orWhere('description', 'LIKE', '%' . $query . '%')
+                         ->paginate(15);
+
+        return view('index', compact('courses'));
+    }
+
+    public function authors(Request $request)
+    {
+
+        $authors = User::where('isAuthor',1)->orderBy('name','desc')
+                              ->paginate(15);
+
+        return view('authors', compact('authors'));
+    }
 }
