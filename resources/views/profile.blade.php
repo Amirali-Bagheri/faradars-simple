@@ -15,7 +15,7 @@
                                     <div class="information_wrapper">
                                         <div class="profile_image_area">
                                             <div>
-                                                <img src="images/authplc.png" alt="Author profile area">
+                                                <img src="/images/authplc.png" alt="Author profile area">
                                                 <div class="img_info">
                                                     <p class="bold">تصویر کاربری</p>
                                                     <p class="subtitle">JPG, GIF or PNG 100x100 px</p>

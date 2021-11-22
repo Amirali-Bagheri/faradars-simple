@@ -21,9 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index'])->name('site.index');
 
-Route::any('search', [SiteController::class, 'search'])->name('site.search');
+Route::any('search', [\App\Http\Controllers\CoursesController::class, 'search'])->name('site.search');
 
-Route::any('/authors', [SiteController::class, 'authors'])->name('site.authors');
+Route::any('/authors', [\App\Http\Controllers\CoursesController::class, 'authors'])->name('courses.authors');
+Route::any('/course/{slug}', [\App\Http\Controllers\CoursesController::class, 'show'])->name('courses.show');
 
 Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');

@@ -3,42 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CoursesController extends Controller
 {
-	public function index()
-	{
-		//
-	}
+    public function authors(Request $request)
+    {
 
-	public function create()
-	{
-		//
-	}
+        $authors = User::where('isAuthor', 1)->orderBy('name', 'desc')
+                       ->paginate(15);
 
-	public function store(Request $request)
-	{
-		//
-	}
+        return view('authors', compact('authors'));
+    }
 
-	public function show(Course $course)
-	{
-		//
-	}
+    public function show(Request $request, $slug)
+    {
+        $course = Course::firstWhere('slug', $slug);
 
-	public function edit(Course $course)
-	{
-		//
-	}
-
-	public function update(Request $request, Course $course)
-	{
-		//
-	}
-
-	public function destroy(Course $course)
-	{
-		//
-	}
+        return view('course', compact('course'));
+    }
 }

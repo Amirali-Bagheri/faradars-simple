@@ -20,8 +20,7 @@ class SiteController extends Controller
             $courses = Course::latest()->paginate(15);
         }
 
-        $categories = Category::where('status', 1)->whereHas('courses')->withCount('courses')->orderBy('courses_count')
-                              ->paginate(15);
+        $categories = Category::where('status', 1)->whereHas('courses')->paginate(15);
 
         return view('index', compact('courses', 'categories'));
     }
@@ -38,12 +37,4 @@ class SiteController extends Controller
         return view('index', compact('courses'));
     }
 
-    public function authors(Request $request)
-    {
-
-        $authors = User::where('isAuthor',1)->orderBy('name','desc')
-                              ->paginate(15);
-
-        return view('authors', compact('authors'));
-    }
 }

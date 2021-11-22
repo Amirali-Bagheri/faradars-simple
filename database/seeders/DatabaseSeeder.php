@@ -27,8 +27,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-
-        // User registrasi
+        // User Seed
         $users = User::factory()->times(10)->create();
         $users->push($defaultUser);
 
@@ -37,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'isAuthor'=>1
         ]);
 
-        // Admin membuat master kategori
+        // Categories
         $categories = [];
         $categories[] = Category::create([
             'title'=>'دسته اول',
@@ -68,11 +67,11 @@ class DatabaseSeeder extends Seeder
 
         $courses = [];
 
-        // Untuk setiap user, punya 0 - 3 course
+        //assign courses to user
         foreach (User::where('isAuthor',1)->get() as $user) {
 
             $userCourses = Course::factory()
-                ->times(rand(1, 3))
+                ->times(20)
                 ->make();
 
             foreach($userCourses as $course) {
