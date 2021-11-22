@@ -151,8 +151,31 @@
                                     <sup> تومان </sup>
                                 </h1>
                             </div>
+
+
                             <div class="purchase-button">
-                                <a class="btn btn--lg btn-primary" href="#">خرید و دانلود</a>
+
+
+                                <form method="post" action="{{route('cart.add')}}">
+                                    @csrf
+                                    <input type="hidden" value="{{ $course->id }}" name="course_id">
+                                    <input type="hidden" value="{{ $course->title }}" name="name">
+                                    <input type="hidden" value="{{ $course->price }}" name="price">
+                                    <input type="hidden" value="1" name="quantity">
+
+                                    <button class="btn btn--lg btn-primary" type="submit">
+
+                                        @if(auth()->check() && \App\Models\Enroll::whereCourseId($course->id)->first() !== null)
+                                            خریداری شده
+                                        @elseif(\Cart::get($course->id) !== null)
+                                            موجود در سبد خرید
+                                        @else
+                                            افزودن به سبد خرید
+                                        @endif
+
+                                    </button>
+                                </form>
+
                             </div>
 
                         </div>

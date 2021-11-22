@@ -14,11 +14,20 @@ class CreateCoursesTable extends Migration
             $table->unsignedBigInteger('author_id');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('description')->nullable();
+            $table->text('short_description')->nullable();
+            $table->longText('description')->nullable();
             $table->float('price')->default(0);
             $table->float('discount')->default(0);
             $table->string('thumbnail')->nullable();
             $table->float('rating')->default(0);
+
+            $table->text('outcomes')->nullable();
+            $table->text('section')->nullable();
+            $table->text('requirements')->nullable();
+            $table->string('language')->default('fa');
+            $table->string('level', 50)->nullable();
+            $table->string('video_url')->nullable();
+
             $table->unsignedInteger('student_count')->default(0);
             $table->unsignedTinyInteger('status')->index()->default(1);
 

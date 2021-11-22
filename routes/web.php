@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\EnrollsController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +23,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index'])->name('site.index');
 
-Route::any('search', [\App\Http\Controllers\CoursesController::class, 'search'])->name('site.search');
+Route::any('search', [CoursesController::class, 'search'])->name('site.search');
 
-Route::any('/authors', [\App\Http\Controllers\CoursesController::class, 'authors'])->name('courses.authors');
-Route::any('/course/{slug}', [\App\Http\Controllers\CoursesController::class, 'show'])->name('courses.show');
+Route::any('/authors', [CoursesController::class, 'authors'])->name('courses.authors');
+Route::any('/course/{slug}', [CoursesController::class, 'show'])->name('courses.show');
+
+// cart
+Route::get('cart', [\App\Http\Controllers\CartController::class,'carts'])->name('carts.all');
+Route::post('cart/add', [\App\Http\Controllers\CartController::class,'add'])->name('cart.add');
+Route::post('cart/remove/{id}', [\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
+
+Route::get('/enroll', [EnrollsController::class, 'enroll'])->name('enroll');
 
 Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');

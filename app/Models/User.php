@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Course::class, 'author_id');
     }
+
+    public function enrolls()
+    {
+        return $this->hasMany(Enroll::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

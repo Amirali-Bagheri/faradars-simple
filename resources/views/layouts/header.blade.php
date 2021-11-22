@@ -44,18 +44,91 @@
                                 </nav>
                             </div>
                         </div>
+
                         @auth
+
                             <div class="author-menu">
 
                                 <div class="author-area">
+                                    <div class="author__notification_area">
+                                        <ul>
+                                            <li class="has_dropdown">
+                                                <div class="icon_wrap">
+                                                    <span class="fa fa-shopping-basket"></span>
+                                                    <span
+                                                        class="notification_count purch">{{ Cart::getContent()->count() }}</span>
+                                                </div>
+                                                <div class="dropdown dropdown--cart">
+                                                    <div class="cart_area">
+                                                        <div class="cart_list">
+                                                            @if (empty(Cart::getContent()))
+
+                                                                <div class="cart_action justify-content-center text-center">
+                                                                    <p class="justify-content-center text-center m-3">
+                                                                        سبد خرید خالی است
+                                                                    </p>
+                                                                </div>
+                                                            @else
+
+                                                                @php
+                                                                    $cart_courses = \App\Models\Course::whereIn('id',collect(Cart::getContent())->keys()->all())->get()
+                                                                @endphp
+
+                                                                @foreach ($cart_courses as $cart)
+                                                                    <div class="cart_product">
+                                                                        <div class="product__info">
+                                                                            <div class="thumbn">
+                                                                                <img alt="cart product thumbnail"
+                                                                                     src="{{$cart->thumbnail}}">
+                                                                            </div>
+                                                                            <div class="info">
+                                                                                <a class="title" href="#">
+                                                                                    {{$cart->title}}
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="product__action">
+                                                                            <form method="post" action="{{route('cart.remove',$cart->id)}}" id="cart-remove-{{$cart->id}}">
+                                                                                @csrf
+                                                                                <span onclick="document.getElementById('cart-remove-{{$cart->id}}').submit();" class="fa fa-trash" type="submit">
+                                                                                </span>
+                                                                            </form>
+                                                                            <p>{{number_format($cart->price)}} تومان</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                @endforeach
+
+                                                                <div class="total">
+                                                                    <p>
+                                                                        <span>مجموع :</span>{{number_format($cart_courses->pluck('price')->sum())}} تومان</p>
+                                                                </div>
+
+                                                                <div class="cart_action">
+                                                                    <a class="btn btn-primary" href="{{route('carts.all')}}">نمایش
+                                                                        سبد</a>
+                                                                    <a class="btn btn-secondary" href="{{route('enroll')}}">پرداخت</a>
+                                                                </div>
+
+                                                            @endif
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                     <div class="author-author__info has_dropdown">
                                         <div class="author__avatar online">
-                                            <img src="{{auth()->user()->avatar}}" width="50" alt="user avatar" class="rounded-circle">
+                                            <img src="{{auth()->user()->avatar}}" width="50" alt="user avatar"
+                                                 class="rounded-circle">
                                         </div>
                                         <div class="dropdown dropdown--author">
                                             <div class="author-credits d-flex">
                                                 <div class="author__avatar">
-                                                    <img src="{{auth()->user()->avatar}}" alt="user avatar" class="rounded-circle">
+                                                    <img src="{{auth()->user()->avatar}}" alt="user avatar"
+                                                         class="rounded-circle">
                                                 </div>
                                                 <div class="autor__info">
                                                     <p class="name">
@@ -76,100 +149,6 @@
                                         </div>
                                     </div>
 
-                                </div>
-
-                                <div class="mobile_content rtl">
-                                    <span class="icon-user menu_icon"></span>
-
-                                    <div class="offcanvas-menu closed">
-                                        <span class="icon-close close_menu"></span>
-                                        <div class="author-author__info">
-                                            <div class="author__avatar v_middle">
-                                                <img src="/images/user-avater.png" alt="user avatar">
-                                            </div>
-                                        </div>
-
-                                        <div class="author__notification_area">
-                                            <ul>
-                                                <li>
-                                                    <a href="notification.htm">
-                                                        <div class="icon_wrap">
-                                                            <span class="icon-bell"></span>
-                                                            <span class="notification_count noti">25</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="message.htm">
-                                                        <div class="icon_wrap">
-                                                            <span class="icon-envelope"></span>
-                                                            <span class="notification_count msg">6</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="cart.htm">
-                                                        <div class="icon_wrap">
-                                                            <span class="icon-basket"></span>
-                                                            <span class="notification_count purch">2</span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="dropdown dropdown--author">
-                                            <ul>
-                                                <li>
-                                                    <a href="author.htm">
-                                                        <span class="icon-user"></span>پروفایل</a>
-                                                </li>
-                                                <li>
-                                                    <a href="dashboard.htm">
-                                                        <span class="icon-home"></span> داشبورد</a>
-                                                </li>
-                                                <li>
-                                                    <a href="dashboard-setting.htm">
-                                                        <span class="icon-settings"></span> تنظیمات</a>
-                                                </li>
-                                                <li>
-                                                    <a href="cart.htm">
-                                                        <span class="icon-basket"></span>خرید</a>
-                                                </li>
-                                                <li>
-                                                    <a href="favourites.htm">
-                                                        <span class="icon-heart"></span> مورد علاقه ها</a>
-                                                </li>
-                                                <li>
-                                                    <a href="dashboard-add-credit.htm">
-                                                        <span class="icon-credit-card"></span>افزودن کارت اعتباری</a>
-                                                </li>
-                                                <li>
-                                                    <a href="dashboard-statement.htm">
-                                                        <span class="icon-chart"></span>نرخ فروش</a>
-                                                </li>
-                                                <li>
-                                                    <a href="dashboard-upload.htm">
-                                                        <span class="icon-cloud-upload"></span>آپلود محصول</a>
-                                                </li>
-                                                <li>
-                                                    <a href="dashboard-manage-item.htm">
-                                                        <span class="icon-notebook"></span>مدیریت محصول</a>
-                                                </li>
-                                                <li>
-                                                    <a href="dashboard-withdrawal.htm">
-                                                        <span class="icon-briefcase"></span>درخواست وجه</a>
-                                                </li>
-                                                <li>
-                                                    <a href="index.htm#">
-                                                        <span class="icon-logout"></span>خروج</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="text-center">
-                                            <a href="signup.htm" class="author-area__seller-btn inline">فروشنده شوید</a>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>

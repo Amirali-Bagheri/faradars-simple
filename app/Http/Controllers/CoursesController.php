@@ -23,4 +23,11 @@ class CoursesController extends Controller
 
         return view('course', compact('course'));
     }
+
+    public function download(Request $request, $slug)
+    {
+        $course = Course::firstWhere('slug', $slug);
+
+        return view('course', compact('course'));
+    }
 }

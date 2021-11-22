@@ -35,13 +35,28 @@ class Course extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function videos()
+    public function lessons()
     {
-        return $this->hasMany(Video::class);
+        return $this->hasMany(Lesson::class);
     }
 
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class);
+    }
+
+    public function review()
+    {
+        return $this->reviews()->whereUserId(auth()->user()->id)->whereCourseId($this->id)->first();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getAverageAttribute()
+    {
+        return (int)$this->reviews()->where('user_id', auth()->user()->id)->avg('rating');
     }
 }

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\User;
-use App\Models\Video;
+use App\Models\Lesson;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -82,8 +82,8 @@ class DatabaseSeeder extends Seeder
 
             foreach($userCourses as $course) {
                 foreach (range(1, 5) as $index) {
-                    $video = Video::factory()->make(['sort' => $index]);
-                    $course->videos()->save($video);
+                    $lesson = Lesson::factory()->make(['sort' => $index]);
+                    $course->lessons()->save($lesson);
                 }
                 $courses[] = $course;
             }
